@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Six expériences interactives autour de la mémoire : connaissances, code, processus, jeu, musique et récit.">
+  <title>Flow — Trois durées de mémoire · Mémoire</title>
+  <link rel="icon" href="/logo-darkwood.png">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/themes.js" defer></script>
+  <script src="/app.js" defer></script>
+  <script src="/static.js" type="module"></script></head>
+<body class="theme-light" data-mode="static">
+<script>try{var t=localStorage.getItem('theme');if(['light','dark','sepia'].includes(t))document.body.className='theme-'+t;}catch(e){}</script>
+<a class="skip-link" href="#main">Aller aux démonstrations</a>
+<header class="navbar-top">
+  <a class="header-brand" href="/" aria-label="Darkwood Memory — accueil"><span class="logo-surface"><img src="/logo-darkwood.png" alt="Darkwood" width="36" height="36"></span><span>Atelier Mémoire</span></a>
+  <div class="top-actions">
+    <a href="https://github.com/matyo91/darkwood-memory" class="icon-control" aria-label="GitHub — code de Darkwood Memory" title="Voir le projet sur GitHub" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ui-icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+</svg>
+</a>
+    <button id="theme-switcher" class="icon-control" aria-label="Thème Clair : passer au thème Sombre" title="Thème Clair : passer au thème Sombre"><span id="theme-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+</span></button>
+    <button id="menu-toggle" class="icon-control mobile-only" aria-expanded="false" aria-controls="sidebar" aria-label="Ouvrir le menu" title="Ouvrir le menu"><svg class="ui-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+  </div>
+  <span id="theme-status" class="visually-hidden" role="status"></span>
+</header>
+<template id="theme-icons"><span data-theme-icon="light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+</span><span data-theme-icon="dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" aria-hidden="true" focusable="false">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+</span><span data-theme-icon="sepia"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" aria-hidden="true" focusable="false">
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                    <line x1="6" y1="1" x2="6" y2="4" />
+                    <line x1="10" y1="1" x2="10" y2="4" />
+                    <line x1="14" y1="1" x2="14" y2="4" />
+                </svg>
+</span></template>
+<div class="app-layout">
+  <aside class="sidebar" id="sidebar" aria-label="Navigation principale">
+    <div class="mobile-menu-heading mobile-only"><span>Explorer la mémoire</span><button id="menu-close" class="icon-control" aria-label="Fermer le menu" title="Fermer le menu"><svg class="ui-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M6 18 18 6"/></svg>
+</button></div>
+    <nav class="sidebar-nav" aria-label="Les six démonstrations">
+      <a href="/" >Vue d’ensemble</a>
+      <p class="nav-caption">Démonstrations</p>
+      <a href="/demo/darkwood/" ><span>Darkwood</span><small>Connaissances</small></a><a href="/demo/flow/" aria-current="page"><span>Flow</span><small>Exécution</small></a><a href="/demo/uniflow/" ><span>Uniflow</span><small>Processus</small></a><a href="/demo/darkwaar/" ><span>Darkwaar</span><small>Jeu</small></a><a href="/demo/djmatyo/" ><span>DJMatyo</span><small>Musique</small></a><a href="/demo/heroclip/" ><span>Heroclip</span><small>Récit</small></a>    </nav>
+  </aside>
+  <div class="page-column"><main id="main" tabindex="-1"><nav class="demo-nav" aria-label="Démonstrations"><a href="/">← L’atelier</a><a href="/demo/darkwood/" >Darkwood</a><a href="/demo/flow/" aria-current="page">Flow</a><a href="/demo/uniflow/" >Uniflow</a><a href="/demo/darkwaar/" >Darkwaar</a><a href="/demo/djmatyo/" >DJMatyo</a><a href="/demo/heroclip/" >Heroclip</a></nav>
+<section class="demo-heading"><p class="eyebrow">FLOW / EXÉCUTION</p><h1>Trois durées de mémoire</h1><p>Observer ce qui disparaît, se réutilise et reste disponible.</p></section>
+<section class="workbench">
+<p class="mode-note">Version navigateur · données fictives · mémoire locale à cet appareil</p>
+  <div class="section-heading"><h2>Un calcul, trois durées.</h2><span>MÉMOIRE NAVIGATEUR</span></div>
+  <p class="mode-note">Cette version exécute du JavaScript et conserve un résultat dans localStorage. Elle ne crée aucune session PHP. La version Symfony du dépôt permet d’expérimenter une véritable session serveur.</p>
+  <div class="memory-lanes"><article><p class="eyebrow">01 / TEMPORAIRE</p><h3 id="temporary-result"></h3><p>La variable est recréée lorsque vous rechargez la page.</p></article><article><p class="eyebrow">02 / RÉUTILISÉ</p><h3 id="memo-result"></h3><p>Deux lectures partagent un calcul dans cette évaluation ; le cache est ensuite abandonné.</p></article><article><p class="eyebrow">03 / CONSERVÉ</p><h3 id="saved-result"></h3><p>Ce résultat reste dans ce navigateur jusqu’à son effacement ou au nettoyage du stockage.</p></article></div>
+  <form id="flow-form"><label for="flow-n">Additionner de 1 à</label><input id="flow-n" name="n" type="number" min="1" max="100000" value="1000" required><div class="actions"><button>Conserver le résultat</button><button type="button" class="secondary" id="flow-clear">Effacer le résultat</button></div></form>
+<p id="storage-status" class="hint" role="status"></p>
+<noscript><p>Activez JavaScript pour essayer ces démonstrations interactives. Le code PHP et les explications sont disponibles dans le dépôt.</p></noscript>
+<script type="application/json" id="demo-data">{"slug":"flow","decisions":{"MEM-001":{"title":"Garder les motifs musicaux modifiables","date":"2026-01-12","source":"Brief fictif de l\u2019atelier","status":"Adopt\u00e9e","history":[{"revision":1,"date":"2026-01-10","text":"Conserver uniquement un rendu audio.","source":"Essai initial fictif"},{"revision":2,"date":"2026-01-12","text":"Conserver aussi les notes, le tempo et les param\u00e8tres pour pouvoir cr\u00e9er une variante.","source":"Retour d\u2019\u00e9coute fictif"}]},"MEM-002":{"title":"S\u00e9parer les choix narratifs des m\u00e9dias","date":"2026-01-15","source":"Storyboard fictif","status":"Adopt\u00e9e","history":[{"revision":1,"date":"2026-01-15","text":"Garder le personnage, sa palette et son accessoire dans une fiche ind\u00e9pendante.","source":"Atelier fictif"}]}},"workflow":{"id":"atelier-bilan","version":1,"title":"Pr\u00e9parer un bilan","input":[12,8,5],"steps":["Collecter les valeurs","Additionner les valeurs","Produire le bilan"]}}</script>
+</section>
+<section class="workbench library-example" aria-labelledby="flow-library-title">
+  <p class="eyebrow">DARKWOOD/FLOW · v8.1.6</p>
+  <h2 id="flow-library-title">Un état qui passe réellement d’une étape à l’autre.</h2>
+  <p>Le premier job additionne 4, 7 et 9. Les deux suivants réutilisent le total pour calculer une moyenne et ce qui reste sur 100. Flow compose les jobs et transporte cet état dans un <code>Ip</code> ; le calcul et les données restent de simples primitives PHP.</p>
+  <p class="mode-note">Ce résultat a été produit par PHP et la véritable bibliothèque pendant le build de cette page. GitHub Pages ne réexécute pas PHP. L’atelier interactif ci-dessus est une illustration JavaScript distincte.</p>
+  <div class="memory-lanes"><article><p>Total partagé</p><h3>20</h3></article><article><p>Moyenne · reste sur 100</p><h3>6,67 · 80</h3></article><article><p>Calcul du total</p><h3>1 seule fois</h3></article></div>
+  <details><summary>Lire le véritable exemple PHP exécutable</summary><pre><code>&lt;?php
+
+declare(strict_types=1);
+
+require_once __DIR__.&#039;/../vendor/autoload.php&#039;;
+
+use Composer\InstalledVersions;
+use Flow\FlowFactory;
+use Flow\Ip;
+
+$calculations = 0;
+$result = [];
+$flow = (new FlowFactory())-&gt;create(static function () use (&amp;$calculations, &amp;$result) {
+    yield static function (array $state) use (&amp;$calculations): array {
+        ++$calculations;
+        return $state + [&#039;total&#039; =&gt; array_sum($state[&#039;values&#039;])];
+    };
+    yield static fn (array $state): array =&gt; $state + [&#039;mean&#039; =&gt; $state[&#039;total&#039;] / count($state[&#039;values&#039;])];
+    yield static function (array $state) use (&amp;$result): array {
+        $result = $state + [&#039;remaining&#039; =&gt; 100 - $state[&#039;total&#039;]];
+        return $result;
+    };
+});
+$flow(new Ip([&#039;values&#039; =&gt; [4, 7, 9]]));
+$flow-&gt;await();
+
+$report = [&#039;package&#039; =&gt; InstalledVersions::getPrettyVersion(&#039;darkwood/flow&#039;), &#039;calculations&#039; =&gt; $calculations, &#039;result&#039; =&gt; $result];
+if (realpath($_SERVER[&#039;SCRIPT_FILENAME&#039;] ?? &#039;&#039;) === __FILE__) {
+    echo json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR).PHP_EOL;
+}
+return $report;
+</code></pre></details>
+  <details><summary>Résultat réel de l’exécution</summary><pre>{
+    &quot;package&quot;: &quot;v8.1.6&quot;,
+    &quot;calculations&quot;: 1,
+    &quot;result&quot;: {
+        &quot;values&quot;: [
+            4,
+            7,
+            9
+        ],
+        &quot;total&quot;: 20,
+        &quot;mean&quot;: 6.666666666666667,
+        &quot;remaining&quot;: 80
+    }
+}</pre></details>
+  <p>Reproduire : <code>nix develop -c php examples/flow-memory.php</code>. À chaque exécution, l’état est neuf. Flow ne fournit ici ni sauvegarde durable, ni cache intersession : conserver le résultat exige un stockage choisi par l’application.</p>
+  <p><a href="https://flow.darkwood.com" target="_blank" rel="noopener noreferrer">Découvrir Flow ↗</a> · <a href="https://github.com/darkwood-com/flow" target="_blank" rel="noopener noreferrer">Code source officiel de Flow ↗</a></p>
+</section>
+<aside class="scope">Expérimentation créée pour l’article « Mémoire : ce qui rend la suite possible ». Les données sont fictives. Aucune connexion aux applications de production.</aside>
+</main><footer><span>Six expériences. Un fil commun.</span><span>Sans compte, sans API payante.</span></footer></div>
+</div>
+</body>
+</html>

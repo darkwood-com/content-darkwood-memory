@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Six expériences interactives autour de la mémoire : connaissances, code, processus, jeu, musique et récit.">
+  <title>DJMatyo — Un motif, plusieurs vies · Mémoire</title>
+  <link rel="icon" href="/logo-darkwood.png">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/themes.js" defer></script>
+  <script src="/app.js" defer></script>
+  <script src="/static.js" type="module"></script></head>
+<body class="theme-light" data-mode="static">
+<script>try{var t=localStorage.getItem('theme');if(['light','dark','sepia'].includes(t))document.body.className='theme-'+t;}catch(e){}</script>
+<a class="skip-link" href="#main">Aller aux démonstrations</a>
+<header class="navbar-top">
+  <a class="header-brand" href="/" aria-label="Darkwood Memory — accueil"><span class="logo-surface"><img src="/logo-darkwood.png" alt="Darkwood" width="36" height="36"></span><span>Atelier Mémoire</span></a>
+  <div class="top-actions">
+    <a href="https://github.com/matyo91/darkwood-memory" class="icon-control" aria-label="GitHub — code de Darkwood Memory" title="Voir le projet sur GitHub" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="ui-icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16">
+  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+</svg>
+</a>
+    <button id="theme-switcher" class="icon-control" aria-label="Thème Clair : passer au thème Sombre" title="Thème Clair : passer au thème Sombre"><span id="theme-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+</span></button>
+    <button id="menu-toggle" class="icon-control mobile-only" aria-expanded="false" aria-controls="sidebar" aria-label="Ouvrir le menu" title="Ouvrir le menu"><svg class="ui-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+  </div>
+  <span id="theme-status" class="visually-hidden" role="status"></span>
+</header>
+<template id="theme-icons"><span data-theme-icon="light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+</span><span data-theme-icon="dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" aria-hidden="true" focusable="false">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+</span><span data-theme-icon="sepia"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ui-icon" aria-hidden="true" focusable="false">
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                    <line x1="6" y1="1" x2="6" y2="4" />
+                    <line x1="10" y1="1" x2="10" y2="4" />
+                    <line x1="14" y1="1" x2="14" y2="4" />
+                </svg>
+</span></template>
+<div class="app-layout">
+  <aside class="sidebar" id="sidebar" aria-label="Navigation principale">
+    <div class="mobile-menu-heading mobile-only"><span>Explorer la mémoire</span><button id="menu-close" class="icon-control" aria-label="Fermer le menu" title="Fermer le menu"><svg class="ui-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M6 18 18 6"/></svg>
+</button></div>
+    <nav class="sidebar-nav" aria-label="Les six démonstrations">
+      <a href="/" >Vue d’ensemble</a>
+      <p class="nav-caption">Démonstrations</p>
+      <a href="/demo/darkwood/" ><span>Darkwood</span><small>Connaissances</small></a><a href="/demo/flow/" ><span>Flow</span><small>Exécution</small></a><a href="/demo/uniflow/" ><span>Uniflow</span><small>Processus</small></a><a href="/demo/darkwaar/" ><span>Darkwaar</span><small>Jeu</small></a><a href="/demo/djmatyo/" aria-current="page"><span>DJMatyo</span><small>Musique</small></a><a href="/demo/heroclip/" ><span>Heroclip</span><small>Récit</small></a>    </nav>
+  </aside>
+  <div class="page-column"><main id="main" tabindex="-1"><nav class="demo-nav" aria-label="Démonstrations"><a href="/">← L’atelier</a><a href="/demo/darkwood/" >Darkwood</a><a href="/demo/flow/" >Flow</a><a href="/demo/uniflow/" >Uniflow</a><a href="/demo/darkwaar/" >Darkwaar</a><a href="/demo/djmatyo/" aria-current="page">DJMatyo</a><a href="/demo/heroclip/" >Heroclip</a></nav>
+<section class="demo-heading"><p class="eyebrow">DJMATYO / MUSIQUE</p><h1>Un motif, plusieurs vies</h1><p>Composer huit pas, les écouter et retrouver son motif.</p></section>
+<section class="workbench">
+<p class="mode-note">Version navigateur · données fictives · mémoire locale à cet appareil</p>
+  <div id="sequencer"><div class="section-heading"><h2>Huit pas pour garder une idée.</h2><span>SYNTHÈSE ORIGINALE</span></div><p>Cliquez sur les cases pour composer. Les notes sont synthétisées dans votre navigateur ; aucun sample n’est utilisé.</p><div id="note-grid" class="note-grid" aria-label="Séquenceur de huit pas"></div><div class="transport"><label for="tempo">Tempo <output id="tempo-value">140</output> BPM</label><input id="tempo" type="range" min="80" max="180" value="140"><button id="play" type="button">Écouter</button><button id="stop" type="button" class="secondary">Arrêter</button></div><div class="actions"><button id="save-pattern">Conserver le motif</button><button id="load-pattern" class="secondary">Retrouver le motif</button><button id="vary-pattern" class="secondary">Créer une variation</button><button id="export-pattern" class="secondary">Exporter JSON</button><button id="clear-pattern" class="text-button">Effacer la mémoire</button></div><p id="music-status" role="status">Le motif initial est prêt. Lancez l’écoute.</p><p class="hint">Notes et tempo restent dans ce navigateur, ou dans le fichier JSON exporté. Aucun contenu musical tiers, compte artiste ou service DJMatyo distant n’est utilisé.</p></div>
+<p id="storage-status" class="hint" role="status"></p>
+<noscript><p>Activez JavaScript pour essayer ces démonstrations interactives. Le code PHP et les explications sont disponibles dans le dépôt.</p></noscript>
+<script type="application/json" id="demo-data">{"slug":"djmatyo","decisions":{"MEM-001":{"title":"Garder les motifs musicaux modifiables","date":"2026-01-12","source":"Brief fictif de l\u2019atelier","status":"Adopt\u00e9e","history":[{"revision":1,"date":"2026-01-10","text":"Conserver uniquement un rendu audio.","source":"Essai initial fictif"},{"revision":2,"date":"2026-01-12","text":"Conserver aussi les notes, le tempo et les param\u00e8tres pour pouvoir cr\u00e9er une variante.","source":"Retour d\u2019\u00e9coute fictif"}]},"MEM-002":{"title":"S\u00e9parer les choix narratifs des m\u00e9dias","date":"2026-01-15","source":"Storyboard fictif","status":"Adopt\u00e9e","history":[{"revision":1,"date":"2026-01-15","text":"Garder le personnage, sa palette et son accessoire dans une fiche ind\u00e9pendante.","source":"Atelier fictif"}]}},"workflow":{"id":"atelier-bilan","version":1,"title":"Pr\u00e9parer un bilan","input":[12,8,5],"steps":["Collecter les valeurs","Additionner les valeurs","Produire le bilan"]}}</script>
+</section>
+<aside class="scope">Expérimentation créée pour l’article « Mémoire : ce qui rend la suite possible ». Les données sont fictives. Aucune connexion aux applications de production.</aside>
+</main><footer><span>Six expériences. Un fil commun.</span><span>Sans compte, sans API payante.</span></footer></div>
+</div>
+</body>
+</html>
