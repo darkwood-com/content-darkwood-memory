@@ -87,7 +87,13 @@
   <p class="mode-note">Trois rives, deux traversées par rive. La carte survit aux retours dans la même partie ; recharger le jeu efface cette connaissance. Le bouton Forget efface aussi les découvertes de la rive courante.</p>
   <div class="game-presentation">
     <figure><img src="/aftertrace/remembered-route.png" alt="Carte d’Aftertrace : une fissure et le chemin sûr restent connus après le retour au départ" width="648" height="1152" loading="lazy"><figcaption>La position et les pas repartent de zéro, la carte reste connue.</figcaption></figure>
-    <figure><video controls playsinline preload="none" poster="/aftertrace/remembered-route.png" aria-label="Teaser de gameplay réel d’Aftertrace"><source src="/aftertrace/teaser.mp4" type="video/mp4"></video><figcaption>Une tentative, un échec, une découverte, puis la livraison.</figcaption></figure>
+    <figure><div data-youtube-id="Mm7xHmnJnKo" data-youtube-title="Aftertrace — teaser de gameplay réel" style="width:100%;max-width:960px">
+  <button type="button" data-youtube-load aria-label="Charger le lecteur YouTube : Aftertrace — teaser de gameplay réel" style="display:block;width:100%;max-width:100%">
+    <img src="/aftertrace/remembered-route.png" alt="" loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;object-fit:contain">    Charger le lecteur YouTube (contenu externe)
+  </button>
+</div>
+<p><a href="https://www.youtube.com/watch?v=Mm7xHmnJnKo" target="_blank" rel="noopener noreferrer">Aftertrace — teaser de gameplay réel — ouvrir sur YouTube ↗</a></p>
+<figcaption>Une tentative, un échec, une découverte, puis la livraison.</figcaption></figure>
   </div>
   <details class="play-aftertrace"><summary>Jouer à Aftertrace ici</summary><iframe src="https://darkwaar.com/game-runtime/01a1bb07-9a00-7003-ae28-1fc114ba6e92/releases/82ceed3e6163ad870df188edc3ee3e2a/index.html" title="Jouer à Aftertrace — Darkwaar" loading="lazy" allow="fullscreen; autoplay" allowfullscreen></iframe></details>
   <p><a href="https://darkwaar.com/games/aftertrace" target="_blank" rel="noopener noreferrer">Jouer sur Darkwaar ↗</a></p>
@@ -96,5 +102,23 @@
 <aside class="scope">Expérimentation créée pour l’article « Mémoire : ce qui rend la suite possible ». Les données sont fictives. Aucune connexion aux applications de production.</aside>
 </main><footer><span>Six expériences. Un fil commun.</span><span>Sans compte, sans API payante.</span></footer></div>
 </div>
+<script>/* Darkwood video embeds: no third-party request before an explicit load action. */
+(() => {
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-youtube-load]');
+    const host = button?.closest('[data-youtube-id]');
+    if (!host || !/^[A-Za-z0-9_-]{11}$/.test(host.dataset.youtubeId)) return;
+    const frame = document.createElement('iframe');
+    frame.src = `https://www.youtube-nocookie.com/embed/${host.dataset.youtubeId}?autoplay=0&playsinline=1`;
+    frame.title = host.dataset.youtubeTitle || 'Vidéo Darkwood';
+    frame.loading = 'lazy';
+    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.allowFullscreen = true;
+    frame.style.cssText = 'display:block;width:100%;aspect-ratio:16/9;border:0';
+    host.replaceChildren(frame);
+  });
+})();
+</script>
 </body>
 </html>
